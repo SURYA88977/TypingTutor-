@@ -1,0 +1,80 @@
+/* ==========================================================================
+   TypeMaster — motion. Only motion that answers an action (switching view,
+   opening results, unlocking) plus one quiet caret blink. The typing text
+   itself is never animated.
+   ========================================================================== */
+
+/* theme change */
+html.theme-fade, html.theme-fade * {
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease !important;
+}
+
+/* view switch */
+.view.entering { animation: view-in 0.28s ease both; }
+@keyframes view-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* caret blink (hero + idle current char) */
+.hero-caret { animation: blink 1.1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* results dialog */
+dialog.modal[open] { animation: modal-in 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.1) both; }
+dialog.modal[open]::backdrop { animation: fade-in 0.25s ease both; }
+@keyframes modal-in {
+  from { opacity: 0; transform: translateY(18px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+.result-grid .stat { animation: pop-in 0.35s ease both; }
+.result-grid .stat:nth-child(2) { animation-delay: 0.05s; }
+.result-grid .stat:nth-child(3) { animation-delay: 0.1s; }
+.result-grid .stat:nth-child(4) { animation-delay: 0.15s; }
+.result-grid .stat:nth-child(5) { animation-delay: 0.2s; }
+.result-grid .stat:nth-child(6) { animation-delay: 0.25s; }
+@keyframes pop-in { from { opacity: 0; transform: translateY(8px) scale(0.96); } to { opacity: 1; transform: none; } }
+
+/* toasts */
+.toast { animation: toast-in 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.1) both; }
+.toast.leaving { animation: toast-out 0.25s ease forwards; }
+@keyframes toast-in { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
+@keyframes toast-out { to { opacity: 0; transform: translateX(24px); } }
+
+/* achievement unlock */
+.toast.achievement .toast-icon { animation: unlock 0.7s ease both 0.15s; }
+@keyframes unlock {
+  0% { transform: scale(0.6) rotate(-14deg); }
+  60% { transform: scale(1.18) rotate(6deg); }
+  100% { transform: none; }
+}
+.ach-card.just-unlocked { animation: glow 1.6s ease 1; }
+@keyframes glow { 0%, 100% { box-shadow: none; } 40% { box-shadow: 0 0 0 4px var(--warn-tint); } }
+
+/* lesson completion */
+.level-card.done .level-num { animation: stamp 0.4s ease both; }
+@keyframes stamp { from { transform: scale(1.3); } to { transform: none; } }
+
+/* wrong key on the stage: tiny nudge on the container, not the text */
+.stage.shake { animation: nudge 0.12s linear 1; }
+@keyframes nudge { 25% { transform: translateX(-2px); } 75% { transform: translateX(2px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .hero-caret { animation: none; }
+}
+
+/* settings can also switch motion off */
+html[data-reduce-motion="true"] *, html[data-reduce-motion="true"] *::before, html[data-reduce-motion="true"] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
+html[data-reduce-motion="true"] .hero-caret { animation: none; }

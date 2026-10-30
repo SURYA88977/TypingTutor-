@@ -1,0 +1,75 @@
+/* ==========================================================================
+   TypeMaster — responsive layout
+   ========================================================================== */
+
+@media (max-width: 1100px) {
+  .span-8, .span-7, .span-6, .span-5, .span-4 { grid-column: span 12; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-actions { grid-auto-flow: column; grid-auto-columns: 1fr; min-width: 0; }
+}
+
+/* Tablet and below: rail becomes a bottom tab bar */
+@media (max-width: 900px) {
+  .app { grid-template-columns: 1fr; }
+
+  .rail {
+    position: fixed; z-index: 50; inset: auto 0 0 0; height: auto;
+    flex-direction: row; padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+    border-right: 0; border-top: 1px solid var(--line);
+    gap: 0;
+  }
+  .rail .brand, .rail-foot { display: none; }
+  .nav { flex-direction: row; width: 100%; justify-content: space-between; gap: 2px; }
+  .nav-link {
+    flex: 1 1 0; min-width: 0; flex-direction: column; gap: 3px; padding: 8px 2px;
+    font-size: 0.68rem; text-align: center; border-radius: 10px;
+  }
+  .nav-link .nav-full { display: none; }
+  .nav-link .nav-short { display: inline; }
+
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    position: sticky; top: 0; z-index: 40; padding: 10px 16px;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .topbar .brand-key { width: 32px; height: 32px; font-size: 1rem; border-radius: 9px; box-shadow: 0 3px 0 #2a37b8; }
+  .topbar .brand-name { font-size: 1.1rem; }
+  .topbar-right { display: flex; align-items: center; gap: 12px; }
+  .topbar-progress { font-family: var(--mono); font-size: 0.8rem; color: var(--text-soft); }
+
+  .main { padding: 24px 16px 110px; }
+  .note-banner { display: block; }
+  .toasts { bottom: 82px; right: 12px; }
+}
+
+@media (min-width: 901px) {
+  .nav-link .nav-short { display: none; }
+}
+
+@media (max-width: 720px) {
+  :root { --type-size: 20px; }
+  .stage { padding: 18px; }
+  .passage { --lines: 5; }
+  .lesson-info { grid-template-columns: 1fr; }
+  .hero { padding: 22px 20px 22px 24px; }
+  .hero-actions { grid-auto-flow: row; }
+  .setting-row { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .vk { padding: 8px; gap: 4px; }
+  .vk-row { gap: 3px; }
+  .vk-key { height: 34px; font-size: 0.68rem; border-radius: 6px; }
+  .vk-key.home::after { bottom: 4px; width: 8px; margin-left: -4px; }
+  .modal-body { padding: 20px; }
+  .week-bars { gap: 6px; }
+  .btn { min-height: 44px; }
+}
+
+@media (max-width: 420px) {
+  .vk-key { font-size: 0.6rem; height: 30px; }
+  .vk-row { gap: 2px; }
+  .live-stats { grid-template-columns: repeat(3, 1fr); }
+  .live-stat { padding: 8px 10px; }
+  .live-stat b { font-size: 1.1rem; }
+}
